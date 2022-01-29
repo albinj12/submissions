@@ -1,0 +1,25 @@
+{
+  "name": "node_logistics",
+  "version": "1.0.0",
+  "description": "Syook technical interview project",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "dev": "nodemon"
+  },
+  "author": "Albin Jose",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.1.8",
+    "morgan": "^1.10.0",
+    "nanoid": "^3.2.0",
+    "pdfkit": "^0.13.0",
+    "swagger-ui-express": "^4.3.0",
+    "winston": "^3.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}

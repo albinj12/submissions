@@ -1,0 +1,611 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "node-logistics",
+    "description": "node-logistics api",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "security": [
+    {
+      "basicAuth": []
+    }
+  ],
+  "paths": {
+    "/items": {
+      "get": {
+        "tags": [
+          "Item"
+        ],
+        "summary": "Get all the items",
+        "description": "",
+        "operationId": "",
+        "responses": {
+          "200": {
+            "description": "All items",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "All items": {
+                    "value": {
+                      "items": [
+                        {
+                          "_id": "61f54a3ff2bd97dbfec495b0",
+                          "name": "newItem",
+                          "price": 10,
+                          "__v": 0
+                        },
+                        {
+                          "_id": "61f54db05660daba8164f5fe",
+                          "name": "Parcel",
+                          "price": 100,
+                          "__v": 0
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Failed to get items"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Item"
+        ],
+        "summary": "Create new item",
+        "description": "Create new item with given details",
+        "operationId": "",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Item that is to be created",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Item"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Failed to save item"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Item"
+        ],
+        "summary": "update an item",
+        "description": "",
+        "operationId": "",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Field whose value does not want to change should have value \"\"",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Item"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Failed to update item"
+          }
+        }
+      }
+    },
+    "/items/{id}": {
+      "summary": "Get a specific item",
+      "get": {
+        "tags": [
+          "Item"
+        ],
+        "summary": "Get the details of a specific item",
+        "description": "",
+        "operationId": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of item to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Item"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Invalid ID"
+          },
+          "500": {
+            "description": "Failed to get item"
+          }
+        }
+      }
+    },
+    "/deliveryvehicles": {
+      "get": {
+        "tags": [
+          "DeliveryVehicle"
+        ],
+        "summary": "Get details of all vehicles",
+        "description": "",
+        "operationId": "",
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "All delivery vehicles": {
+                    "value": {
+                      "items": [
+                        {
+                          "_id": "61f54a7ff2bd97dbfec495b3",
+                          "activeOrdersCount": 0,
+                          "registrationNumber": "DV-00-D-0001",
+                          "vehicleType": "bike",
+                          "city": "wayanad",
+                          "__v": 0
+                        },
+                        {
+                          "_id": "61f54df15660daba8164f601",
+                          "activeOrdersCount": 0,
+                          "registrationNumber": "DV-00-D-0000",
+                          "vehicleType": "bike",
+                          "city": "Bangalore",
+                          "__v": 0
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Failed to get vehicle details"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "DeliveryVehicle"
+        ],
+        "summary": "Save delivery vehicle details to db",
+        "description": "",
+        "operationId": "",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Details of vehicle",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeliveryVehicle"
+            }
+          }
+        ],
+        "responses": {
+          "210": {
+            "description": "Vehicle details is saved to db"
+          },
+          "400": {
+            "description": "Vehicle with given registration number is already registered"
+          },
+          "500": {
+            "description": "Failed to save vehicle details"
+          }
+        }
+      }
+    },
+    "/deliveryvehicles/{id}": {
+      "get": {
+        "tags": [
+          "DeliveryVehicle"
+        ],
+        "summary": "Get vehicle details",
+        "description": "",
+        "operationId": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of vehicle to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/DeliveryVehicle"
+            },
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Vehicle": {
+                    "value": {
+                      "_id": "61f54df15660daba8164f601",
+                      "activeOrdersCount": 0,
+                      "registrationNumber": "DV-00-D-0000",
+                      "vehicleType": "bike",
+                      "city": "Bangalore",
+                      "__v": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Failed to get vehicle detail"
+          }
+        }
+      }
+    },
+    "/customers": {
+      "get": {
+        "tags": [
+          "Customers"
+        ],
+        "summary": "Get details of all customer",
+        "description": "",
+        "operationId": "",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "All customers": {
+                    "value": {
+                      "customers": [
+                        {
+                          "_id": "61f54af7f2bd97dbfec495b8",
+                          "name": "Test User",
+                          "city": "chennai",
+                          "__v": 0
+                        },
+                        {
+                          "_id": "61f54d0293be8b07af936339",
+                          "name": "Test User",
+                          "city": "bangalore",
+                          "__v": 0
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Failed to get customer details"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Customers"
+        ],
+        "summary": "Create customer",
+        "description": "Create a new customer",
+        "operationId": "",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Details of user to be saved to db",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Customer"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Failed to save customer details"
+          }
+        }
+      }
+    },
+    "/customers/{id}": {
+      "get": {
+        "tags": [
+          "Customers"
+        ],
+        "summary": "Get customer details",
+        "description": "Get the details of a specific customer",
+        "operationId": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of customer to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Item"
+            },
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Customer": {
+                    "value": {
+                      "customer": {
+                        "_id": "61f54af7f2bd97dbfec495b8",
+                        "name": "Test User",
+                        "city": "Bangalore",
+                        "__v": 0
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid id"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Failed to get customer"
+          }
+        }
+      }
+    },
+    "/orders": {
+      "post": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Create order",
+        "description": "Create a new order",
+        "operationId": "",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "If customer is new, then set customerId to \"\" so that new customer data can be saved in db",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Order"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "No vehicles available"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Failed to create order"
+          }
+        }
+      }
+    },
+    "/orders/{id}": {
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Get order details",
+        "description": "Get details of a specific order",
+        "operationId": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "OrderNo of order to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "No vehicles available",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Order Details": {
+                    "value": {
+                      "order": {
+                        "_id": "61f54e185660daba8164f608",
+                        "isDelivered": true,
+                        "itemId": "61f54db05660daba8164f5fe",
+                        "price": 100,
+                        "customerId": "61f54e185660daba8164f605",
+                        "deliveryVehicleId": "DV-00-D-0000",
+                        "location": "Bangalore",
+                        "orderNumber": 5,
+                        "__v": 0,
+                        "invoiceId": "84936538759272816"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid id"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Failed to get order"
+          }
+        }
+      }
+    },
+    "/orders/{id}/status": {
+      "put": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Change delivery status of  order",
+        "description": "Change delivery status of order true and create an invoice",
+        "operationId": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "OrderNo of order to change status",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Order status change to delivered"
+          },
+          "400": {
+            "description": "invalid id"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Failed to change delivery status"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Item": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "price": {
+          "type": "integer"
+        }
+      }
+    },
+    "DeliveryVehicle": {
+      "typr": "object",
+      "properties": {
+        "registrationNumber": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "vehicleType": {
+          "type": "string",
+          "description": "vehicle type",
+          "enum": [
+            "truck",
+            "bike"
+          ]
+        }
+      }
+    },
+    "Customer": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        }
+      }
+    },
+    "Order": {
+      "type": "object",
+      "properties": {
+        "itemId": {
+          "type": "string"
+        },
+        "customerId": {
+          "type": "string"
+        },
+        "customerName": {
+          "type": "string"
+        },
+        "customerCity": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
