@@ -18,6 +18,7 @@ const deliveryVehicleSchema = new mongoose.Schema({
     activeOrdersCount: {
         type: Number,
         default: 0,
+        min: 0,
         max: 2
     }
 })
